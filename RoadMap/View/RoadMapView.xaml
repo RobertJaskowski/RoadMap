@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="RoadMap.View.RoadMapView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RoadMap.View"
+             xmlns:main="clr-namespace:RoadMap"
+             mc:Ignorable="d" 
+             >
+    <UserControl.Resources>
+    <main:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid>
+
+
+        <ListView   Name="Roadmap" ItemsSource="{Binding RoadmapItems,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsEmptyVisible, Converter={StaticResource BoolToVisibilityConverter}}" Background="{x:Null}" BorderBrush="{x:Null}">
+
+
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox  Text="{Binding Rule,UpdateSourceTrigger=PropertyChanged}" Background="{x:Null}">
+
+                            <TextBox.InputBindings>
+                                <MouseBinding  Command="{Binding Path=DataContext.RoadmapItemLeftClicked, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }" MouseAction="LeftDoubleClick" />
+                                <MouseBinding Command="{Binding Path=DataContext.RoadmapItemRightClicked, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }" MouseAction="RightDoubleClick" />
+                                <MouseBinding Command="{Binding Path=DataContext.RoadmapItemMiddleClicked, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding }" MouseAction="MiddleClick" />
+
+
+                            </TextBox.InputBindings>
+                        </TextBox>
+
+
+
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+    </Grid>
+</UserControl>
